@@ -1,8 +1,24 @@
 #!/bin/bash
 
-# 默认邮箱和用户名
-default_email="lg295060456@gmail.com"
-default_username="Jobs"
+# 默认邮箱（用户名）、Token（密码）
+default_email="295060456@qq.com"
+default_token="YOUR_TOKEN"
+
+# 检查是否已注册成功
+if ! pod trunk me &> /dev/null; then
+    # 输入邮箱（用户名）
+    read -p "Enter email (default: $default_email): " email
+    email=${email:-$default_email}
+
+    # 输入Token（密码）
+    read -p "Enter token (default: $default_token): " token
+    token=${token:-$default_token}
+
+    # 注册 CocoaPods Trunk
+    pod trunk register "$email" "$token"
+else
+    echo "Already registered with CocoaPods Trunk. Skipping registration."
+fi
 
 # 获取当前文件夹路径
 current_directory=$(dirname "$(realpath "$0")")
@@ -19,20 +35,12 @@ if [ ${#podspec_files[@]} -eq 0 ]; then
     exit 1
 fi
 
-# 输入邮箱
-read -p "Enter email (default: $default_email): " email
-email=${email:-$default_email}
-
-# 输入用户名
-read -p "Enter username (default: $default_username): " username
-username=${username:-$default_username}
-
 # 执行pod spec lint命令，并在每个文件通过lint后推送到CocoaPods
 for podspec_file in "${podspec_files[@]}"; do
     echo "Linting $podspec_file"
     if pod spec lint --allow-warnings --verbose "$podspec_file"; then
         echo "去点击邮箱验证，以继续"
-        pod trunk register "$email" "$username"
+
         read -p "Do you want to continue? Press Enter to continue, any other key to abort." choice
         if [ -z "$choice" ]; then
             echo "Continuing..."
@@ -61,10 +69,16 @@ git commit -m "${git_commit_des}"
 # 添加打标签tag，并推送到远端
 echo -e "\n ------ 执行 git 打标签tag，并推送到远端 ------ \n"
 pod_spec_version="1.0.0"  # 设置标签版本号
-echo "git tag ${pod_spec_version}"
-git tag "${pod_spec_version}"
-echo "git push origin master --tags"
-git push origin master --tags
+
+if git rev-parse "refs/tags/${pod_spec_version}" >/dev/null 2>&1; then
+    echo "Tag ${pod_spec_version} already exists. Cancelling tag push."
+else
+    echo "git tag ${pod_spec_version}"
+    git tag "${pod_spec_version}"
+    echo "git push origin master --tags"
+    git push origin master --tags
+fi
+
 
 :<<'COMMENT'
 pod spec lint 和 pod lib lint 都是用于校验 CocoaPods 规范的命令，但它们的使用场景略有不同。
