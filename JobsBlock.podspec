@@ -22,6 +22,7 @@ Pod::Spec.new do |spec|
   # commit 参数用于指定从 Github 存储库中获取代码时要使用的提交哈希值
   # 注意不要包含:commit参数,因为CocoaPods会自动使用最新的commit
   spec.source       = {:git => "git@github.com:295060456/JobsBlock.git",:tag => "#{spec.version}"}
+  # spec.source       = {:git => "https://github.com/295060456/JobsBlock.git",:tag => "#{spec.version}"}
   spec.social_media_url = 'https://github.com/295060456'
   spec.ios.deployment_target = '10.0'
   spec.swift_version = '5.0'

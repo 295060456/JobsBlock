@@ -38,7 +38,7 @@ else
         echo "Linting $podspec_file"
         if pod spec lint --allow-warnings --verbose "$podspec_file"; then
             echo "Pushing $podspec_file to CocoaPods"
-            pod trunk push "$podspec_file"
+            pod trunk push "$podspec_file" --allow-warnings
         else
             echo "Failed to lint $podspec_file. Skipping push to CocoaPods."
         fi
