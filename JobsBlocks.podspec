@@ -28,7 +28,7 @@ Pod::Spec.new do |spec|
   # 库的是否需要支持ARC
   spec.requires_arc = true
   # 库的公开的头文件
-  spec.public_header_files = "JobsBlock/JobsBlock.h"
+  # spec.public_header_files = "JobsBlock/JobsBlock.h"
 
   # 库的资源路径：路径可以指向远端代码库，也可以指向本地项目，例如：
   ## 1、指向Git远端代码库：spec.source = {:git => "git@git.oschina.net:yoowei/yoowei.git", :tag => "1.0.0"}
@@ -37,8 +37,9 @@ Pod::Spec.new do |spec|
   ## 4、zip：spec.source = {:http=> 'http://xxx.zip', :tag => "1.0.0"}
   ## 5、svn：spec.source = {:svn=> 'http://path', :tag => "1.0.0"}
 
+# 建议使用 HTTPS 而不是 Git SSH URLs。这是因为某些防火墙可能会阻止对 SSH URL 的访问，而允许对 HTTPS URL 的访问。
   spec.source = {
-  :git => "git@github.com:295060456/JobsBlock.git",
+  :git => "https://github.com/295060456/JobsBlock.git",
   :tag => "#{spec.version}",
   :commit => "Jobs第一次推送"}
   spec.source_files = [
