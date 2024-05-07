@@ -20,7 +20,7 @@ Pod::Spec.new do |spec|
   spec.author           = { 'Jobs' => 'lg295060456@gmail.com' }
   # 这里的commit会和Github进行通讯，这里的值不能是自定义。
   # commit 参数用于指定从 Github 存储库中获取代码时要使用的提交哈希值
-  spec.source       = {:git => "https://github.com/295060456/JobsBlock.git",:tag => "#{spec.version}",:commit => "6482cd8"}
+  spec.source       = {:git => "git@github.com:295060456/JobsBlock.git",:tag => "#{spec.version}",:commit => "6482cd8"}
   spec.social_media_url = 'https://github.com/295060456'
   spec.ios.deployment_target = '10.0'
   spec.swift_version = '5.0'
